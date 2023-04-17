@@ -1,4 +1,15 @@
-﻿namespace HrApi.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HrApi.Models;
+
+
+
+public record DepartmentCreateRequest
+{
+    
+    [Required, MinLength(3), MaxLength(20)]
+     public string Name { get; set; } = string.Empty;
+}
 
 public record DepartmentsResponse
 {

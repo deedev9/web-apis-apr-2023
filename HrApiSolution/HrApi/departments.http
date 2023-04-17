@@ -1,0 +1,13 @@
+### Getting the deparments
+
+GET http://localhost:1337/departments
+
+
+### Adding a department
+
+POST http://localhost:1337/departments
+Content-Type: application/json
+
+{
+  "name": "Testers"
+}
