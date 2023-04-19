@@ -2,6 +2,7 @@
 
 namespace HrApi.Models;
 
+
 public record HiringRequestSalaryModel
 {
     public decimal Salary { get; set; }
@@ -22,8 +23,9 @@ public record HiringRequestResponseModel
     public string LastName { get; set; } = string.Empty;
     public string Notes { get; set; } = string.Empty;
 
+   
     public HiringRequestStatus Status { get; set; } = HiringRequestStatus.AwaitingSalary;
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+//[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HiringRequestStatus {  AwaitingSalary, AwaitingDepartment, Hired, Declined }

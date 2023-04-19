@@ -5,7 +5,7 @@
 namespace HrApi.Migrations
 {
     /// <inheritdoc />
-    public partial class salaryForHiringRequest : Migration
+    public partial class SalaryForHiringRequest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

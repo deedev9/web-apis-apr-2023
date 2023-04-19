@@ -7,11 +7,12 @@ namespace HrApi.Controllers;
 
 public class HiringRequestsController :ControllerBase
 {
+
     private readonly IManageHiringRequests _hiringManager;
 
-    public HiringRequestsController(IManageHiringRequests hiringManger)
+    public HiringRequestsController(IManageHiringRequests hiringManager)
     {
-        _hiringManager = hiringManger;
+        _hiringManager = hiringManager;
     }
 
     [HttpPut("/hiring-requests/{id:int}/salary")]
@@ -21,31 +22,31 @@ public class HiringRequestsController :ControllerBase
         if(wasUpdated)
         {
             return NoContent();
-        }
-        else
+        } else
         {
             return NotFound();
         }
+
     }
 
     [HttpPost("/hiring-requests")]
     public async Task<ActionResult<HiringRequestResponseModel>> AddAHiringRequest([FromBody] HiringRequestCreateModel request)
     {
         // Validate it (validation attributes, all that jazz)
+        
         HiringRequestResponseModel response = await _hiringManager.CreateHiringRequestAsync(request);
-        return CreatedAtRoute("hiring-requests-get-by-id", new {id = response.Id}, response);
-
+        return CreatedAtRoute("hiring-requests-get-by-id", new { id = response.Id }, response);
     }
-    [HttpGet("/hiring-requests/{id:int}", Name = "hiring-requests-get-by-id")]
+
+    [HttpGet("/hiring-requests/{id:int}", Name ="hiring-requests-get-by-id")]
     public async Task<ActionResult<HiringRequestResponseModel>> GetHiringRequest(int id)
     {
         HiringRequestResponseModel? response = await _hiringManager.GetHiringRequestByIdAsync(id);
 
-        if (response == null)
+        if(response == null)
         {
             return NotFound();
-        }
-        else
+        }  else
         {
             return Ok(response);
         }

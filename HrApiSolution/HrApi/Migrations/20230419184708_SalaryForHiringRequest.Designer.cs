@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrApi.Migrations
 {
     [DbContext(typeof(HrDataContext))]
-    [Migration("20230419185412_salaryForHiringRequest2")]
-    partial class salaryForHiringRequest2
+    [Migration("20230419184708_SalaryForHiringRequest")]
+    partial class SalaryForHiringRequest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,6 @@ namespace HrApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Salary")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")

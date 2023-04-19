@@ -11,8 +11,6 @@ public class EntityFrameworkHiringManager : IManageHiringRequests
     private readonly IMapper _mapper;
     private readonly MapperConfiguration _config;
 
-
-
     public EntityFrameworkHiringManager(HrDataContext context, IMapper mapper, MapperConfiguration config)
     {
         _context = context;
@@ -20,13 +18,20 @@ public class EntityFrameworkHiringManager : IManageHiringRequests
         _config = config;
     }
 
-    public async Task<HiringRequestResponseModel?> GetHiringRequestByIdAsync(int id)
+    public async Task<bool> AssignSalaryAsync(int id, decimal salary)
     {
-        var response = await _context.HiringRequests
-        .Where(req => req.Id == id)
-        .ProjectTo<HiringRequestResponseModel>(_config)
-        .SingleOrDefaultAsync();
-        return response;
+        var hiringRequest = await _context.HiringRequests.SingleOrDefaultAsync(h => 
+            h.Id == id && h.Status == HiringRequestStatus.AwaitingSalary); 
+        if(hiringRequest != null)
+        {
+            hiringRequest.Salary = salary;
+            hiringRequest.Status = HiringRequestStatus.AwaitingDepartment;
+            await _context.SaveChangesAsync();
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
     public async Task<HiringRequestResponseModel> CreateHiringRequestAsync(HiringRequestCreateModel request)
@@ -35,24 +40,16 @@ public class EntityFrameworkHiringManager : IManageHiringRequests
         _context.HiringRequests.Add(entity);
         await _context.SaveChangesAsync();
         var response = _mapper.Map<HiringRequestResponseModel>(entity);
-        //// HiringRequestModel => HiringRequestEntity
-        return response;
+        //// HiringRequestModel => HiringRequestEntity
+        return response;
     }
 
-    public async Task<bool> AssignSalaryAsync(int id, decimal salary)
+    public async Task<HiringRequestResponseModel?> GetHiringRequestByIdAsync(int id)
     {
-        var hiringRequest = await _context.HiringRequests.SingleOrDefaultAsync(h => h.Id == id &&
-            h.Status == HiringRequestStatus.AwaitingSalary);
-        if (hiringRequest != null )
-        {
-            hiringRequest.Salary = salary;
-            hiringRequest.Status = HiringRequestStatus.AwaitingDepartment;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        var response = await _context.HiringRequests
+               .Where(req => req.Id == id)
+              .ProjectTo<HiringRequestResponseModel>(_config)
+              .SingleOrDefaultAsync();
+        return response;
     }
 }
