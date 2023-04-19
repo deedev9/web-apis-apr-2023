@@ -9,5 +9,6 @@ public class HiringRequestEntity
     public string LastName { get; set; } = string.Empty;
     public string Notes { get; set; } = string.Empty;
     public DateTime Created { get; set; }
+    public decimal Salary { get; set; }
     public HiringRequestStatus Status { get; set; } = HiringRequestStatus.AwaitingSalary;
 }

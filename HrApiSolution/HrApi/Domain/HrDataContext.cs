@@ -25,5 +25,8 @@ public class HrDataContext : DbContext
         modelBuilder.Entity<DepartmentEntity>()
             .HasIndex(b => b.Name).IsUnique();
 
+        modelBuilder.Entity<HiringRequestEntity>()
+            .Property(b => b.Salary).HasPrecision(18, 2);
+
     }
 }

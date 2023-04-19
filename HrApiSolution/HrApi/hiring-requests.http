@@ -8,3 +8,6 @@ Content-Type: application/json
   "lastName": "Smith",
   "notes": "Super hacker dude. Also plays guitar in some 80's band."
 }
+
+### Get A Hiring Request
+GET http://localhost:1337/hiring-requests/2

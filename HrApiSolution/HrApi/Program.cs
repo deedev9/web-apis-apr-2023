@@ -9,8 +9,6 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 // the default web application builder has about 190+ "Services" that do all the work in your API.
 
-
-
 // Add services to the container.
 
 builder.Services.AddControllers(options =>
@@ -20,7 +18,7 @@ builder.Services.AddControllers(options =>
 
 }).AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    //options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -78,6 +76,10 @@ var mapperConfiguration = new MapperConfiguration(options =>
 
 builder.Services.AddSingleton<IMapper>(mapperConfiguration.CreateMapper());
 builder.Services.AddSingleton<MapperConfiguration>(mapperConfiguration);
+
+//Lazy will only create and instance of this once it is needed and will use the same one throughout the same request
+//Created on demand
+builder.Services.AddScoped<IManageHiringRequests, EntityFrameworkHiringManager>();
 
 // before the application is built is above here services.
 var app = builder.Build();
